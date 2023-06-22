@@ -20,10 +20,8 @@ import (
 func TestUrls(t *testing.T) {
 
 }
-
 func urlCheck(urls []string) map[string]string {
 	resultMap := make(map[string]string, len(urls))
-
 	wg := &sync.WaitGroup{}
 	wg.Add(len(urls))
 	mux := &sync.Mutex{}
@@ -46,9 +44,7 @@ func urlCheck(urls []string) map[string]string {
 				}
 				resultChan <- string(respByte)
 			}
-
 		}(resultChan, val)
-
 		go func(val string) {
 			defer wg.Done()
 			select {
@@ -64,7 +60,27 @@ func urlCheck(urls []string) map[string]string {
 		}(val)
 
 	}
-
 	wg.Wait()
 	return resultMap
+}
+
+type Mem string
+
+func main() {
+	var w interface{} = Mem("Hello, World!")
+
+	if mem, ok := w.(Mem); ok {
+		fmt.Println(string(mem))
+	} else {
+		fmt.Println("Не удалось привести к типу Mem")
+	}
+}
+var w interface{} = "Hello, World!"
+switch v := w.(type) {
+case string:
+fmt.Println("Значение является типом string:", v)
+case int:
+fmt.Println("Значение является типом int:", v)
+default:
+fmt.Println("Неизвестный тип значения")
 }

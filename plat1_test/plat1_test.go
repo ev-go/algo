@@ -8,20 +8,20 @@ import (
 func TestPlat1(t *testing.T) {
 	i := 1
 
-	defer fmt.Printf("First defer: %d\n", i) // fourth out: 1
+	defer fmt.Printf("First defer: %d\n", i) // 1
 	i++
 
 	defer func() {
-		fmt.Printf("Second defer: %d\n", i) // //third: 2 //3
+		fmt.Printf("Second defer: %d\n", i) // //third 4
 	}()
 
 	i++
 
 	defer func(i int) {
-		fmt.Printf("Third defer: %d\n", i) // second 3
+		fmt.Printf("Third defer: %d\n", i) //second 3
 	}(i)
 
 	i++
 
-	defer fmt.Printf("First defer: %d\n", i) // first out: 4
+	defer fmt.Printf("First defer: %d\n", i) //first 4
 }

@@ -2,6 +2,7 @@ package plat5_test
 
 import (
 	"fmt"
+	"reflect"
 	"sync"
 	"sync/atomic"
 	"testing"
@@ -27,5 +28,24 @@ func TestPlat5(t *testing.T) { // сколько работает по врем�
 		}()
 	}
 	wg.Wait()
-	fmt.Println(count)
+	fmt.Println(count.Load())
+	v := reflect.ValueOf(count)
+	field := v.FieldByName("v")
+	if field.IsValid() {
+		countValue := field.Int()
+		fmt.Println(countValue)
+	} else {
+		fmt.Println("Field not found")
+	}
+
+	var w interface{} = "Hello, World!"
+
+	switch g := w.(type) {
+	case string:
+		fmt.Println("Значение является типом string:", g)
+	case int:
+		fmt.Println("Значение является типом int:", g)
+	default:
+		fmt.Println("Неизвестный тип значения")
+	}
 }
